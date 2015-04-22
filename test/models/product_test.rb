@@ -14,7 +14,7 @@ class ProductTest < ActiveSupport::TestCase
   end
 
   test "product price must be positive" do
-  	product = Product.new(title: "Hi", description: "blablabla", image_url: "img.jpg")
+  	product = Product.new(title: "Hi1234567890", description: "blablabla", image_url: "img.jpg")
   	
   	product.price = -1
   	assert product.invalid?
@@ -29,7 +29,7 @@ class ProductTest < ActiveSupport::TestCase
   end
 
   def new_product(image_url)
-    Product.new(title: "Hi", description: "blablabla", price: 0.01, image_url: image_url)
+    Product.new(title: "Hi0123456789", description: "blablabla", price: 0.01, image_url: image_url)
   end
 
   test "image url must end in .jpg, .gif or .png" do
@@ -48,9 +48,14 @@ class ProductTest < ActiveSupport::TestCase
   end
 
   test "product is not valid without unique title" do
-    product = Product.new(title: products(:ruby).title, description: "blablabla", image_url: "img.jpg")
+    product = Product.new(title: products(:ruby).title, description: "blablabla", price: 0.01, image_url: "img.jpg")
     assert !product.save
     assert_equal "has already been taken", product.errors[:title].join("; ")
+  end
+
+  test "title name is at least 10 characters long" do
+    product = Product.new(title: "12345678901", description: "blablabla", price: 0.01, image_url: "img.jpg")
+    assert product.valid?, "title too short" 
   end
 
 end
