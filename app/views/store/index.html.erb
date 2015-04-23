@@ -3,6 +3,9 @@
 <% end%>
 
 <h1>Your Pragmatic Catalog</h1>
+<% if @num_visits > 5 %>
+	<p>Visits: <%= @num_visits %></p>
+<% end %>
 
 <% @products.each do |product| %>
 	<div class="entry">
