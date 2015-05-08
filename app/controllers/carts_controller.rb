@@ -1,5 +1,11 @@
 class CartsController < ApplicationController
   before_action :set_cart, only: [:show, :edit, :update, :destroy]
+  rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
+
+  def invalid_cart
+    logger.error "Attempt to access invalid cart"
+    redirect_to store_url, notice: 'Invalid cart'
+  end
 
   # GET /carts
   # GET /carts.json
@@ -25,7 +31,7 @@ class CartsController < ApplicationController
   # POST /carts.json
   def create
     @cart = Cart.new(cart_params)
-    
+
     session[:counter] = 0
     respond_to do |format|
       if @cart.save
