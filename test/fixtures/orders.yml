@@ -3,7 +3,7 @@
 one:
   name: Bruce Wayne
   address: MyText
-  email: bruce@batmail.com
+  email: bruce@example.com
   pay_type: Cheque
 
 two:
